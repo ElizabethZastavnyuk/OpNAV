@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 import requests
 import rasterio
 import os
+from pathlib import Path
+
+IMG_DIR = Path(__file__).resolve().parent.parent / "img"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
 
 url = "https://planetarymaps.usgs.gov/mosaic/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif"
 local_file = "moon_dem.tif"
@@ -53,6 +57,7 @@ ax.set_xlabel('Longitude (°)')
 ax.set_ylabel('Latitude (°)')
 ax.grid(True, alpha=0.3, color='white')
 plt.tight_layout()
-plt.savefig('moon_global.png', dpi=150)
+out_path = IMG_DIR / "moon_global.png"
+plt.savefig(out_path, dpi=150)
 plt.show()
-print("Saved to moon_global.png")
+print(f"Saved to {out_path}")

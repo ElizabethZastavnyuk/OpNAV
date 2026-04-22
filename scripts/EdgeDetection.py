@@ -10,13 +10,13 @@ Images sourced from:
   - NASA SVS thumbnail (smaller, faster to test with)
 
 Usage:
-    python lunar_adaptive_canny.py
+    python EdgeDetection.py
 
     # Or point at your own image:
-    python lunar_adaptive_canny.py --image path/to/your/lunar.png
+    python EdgeDetection.py --image path/to/your/lunar.png
 
     # Adjust Canny sensitivity:
-    python lunar_adaptive_canny.py --otsu-ratio 0.4 --blur 5
+    python EdgeDetection.py --otsu-ratio 0.4 --blur 5
 """
 
 import argparse
@@ -45,6 +45,7 @@ NASA_SOURCES = {
 }
 
 CACHE_DIR = Path("/tmp/lunar_cache")
+IMG_DIR = Path(__file__).resolve().parent.parent / "img"
 
 
 # ---------------------------------------------------------------------------
@@ -247,7 +248,8 @@ def visualize(result: dict, title: str = "Adaptive Canny — Lunar Image"):
              ha="center", color="#888", fontsize=9)
 
     plt.tight_layout()
-    out_path = "/tmp/lunar_adaptive_canny_result.png"
+    IMG_DIR.mkdir(parents=True, exist_ok=True)
+    out_path = str(IMG_DIR / "lunar_adaptive_canny_result.png")
     plt.savefig(out_path, dpi=150, bbox_inches="tight",
                 facecolor=fig.get_facecolor())
     print(f"\n  Saved figure → {out_path}")
@@ -295,7 +297,8 @@ def compare_fixed_vs_adaptive(img: np.ndarray,
                 color="#88ccff", fontsize=8)
 
     plt.tight_layout()
-    out_path = "/tmp/lunar_canny_comparison.png"
+    IMG_DIR.mkdir(parents=True, exist_ok=True)
+    out_path = str(IMG_DIR / "lunar_canny_comparison.png")
     plt.savefig(out_path, dpi=150, bbox_inches="tight",
                 facecolor=fig.get_facecolor())
     print(f"  Saved comparison → {out_path}")
